@@ -15,13 +15,13 @@ function Notes() {
       <div className="todoList">
         <ul>
           {todos.map((todo) => (
-            <Note id={todo.id} name={todo.name} removeTodo={removeTodo} todo={{
+            <Note id={todo.id} name={todo.name} removeTodo={removeTodo}  todo={{
               id: undefined
-            }}/>
+            }} editTodo={editTodo}/>
           ))}
         </ul>
-        <form onSubmit={addTodo}>
-          <input className="input" type="text" placeholder="Add a todo"  value={todoName} onChange={
+        <form className='form' onSubmit={(e) => {addTodo(e)}}>
+          <input className="input" type="text" placeholder="Add a todo" value={todoName} onChange={
             item => setTodoName(item.target.value)} 
           />
           <button>Add</button>
@@ -33,14 +33,36 @@ function Notes() {
   
 
   //*Adds a new todo to the list of todos
-  function addTodo(item: { preventDefault: () => void; }) {
+  function addTodo(item: React.FormEvent<HTMLFormElement>) {
     item.preventDefault(); //prevents the page from refreshing
+    if(!todoName) {
+      let input = document.querySelector(".form");
+      input?.animate([
+        {boxShadow: '0px 0px 1rem red'},
+        {transform: 'translateX(-10px)'},
+        {transform: 'translateX(10px)'},
+        {transform: 'translateX(-10px)'},
+        {transform: 'translateX(10px)'},
+        {transform: 'translateX(-10px)'},
+        {transform: 'translateX(10px)'},  
+        {transform: 'translateX(-10px)'},
+        {transform: 'translateX(10px)'}
+        
+      ], { duration: 650});
+      return;
+    } //if the input is empty, do nothing and animate
+    //console.log(todoName);
     setTodos([...todos, {id: id, name: todoName}]);
     setId(id + 1);
     }
   
   function removeTodo(id: number) {
     setTodos(todos.filter(todo => todo.id !== id));
+  }
+
+  function editTodo(id:number) {
+    setTodos(todos.filter(todo => todo.id !== id));
+
   }
 }
 
