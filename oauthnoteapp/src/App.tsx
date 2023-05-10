@@ -1,11 +1,17 @@
 
 import Notes from './Notes';
+import Header from './Header';
 
 import './App.css';
 
 function App() {
   return (
-    <Notes/>
+    <>
+      <Header/>
+      <span id= "NoteContainer">
+        <Notes/>
+      </span>
+    </>
   );  
 }
 

@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import Note from './NoteSingle';
 
 function Notes() {
 
@@ -14,20 +15,19 @@ function Notes() {
       <div className="todoList">
         <ul>
           {todos.map((todo) => (
-            <li key={todo.id}>
-              {todo.name}
-              <button onClick={() => removeTodo(todo.id)}>Remove</button>
-            </li>
+            <Note id={todo.id} name={todo.name} removeTodo={removeTodo} todo={{
+              id: undefined
+            }}/>
           ))}
         </ul>
         <form onSubmit={addTodo}>
-          <input type="text" placeholder="Add a todo"  value={todoName} onChange={
+          <input className="input" type="text" placeholder="Add a todo"  value={todoName} onChange={
             item => setTodoName(item.target.value)} 
           />
           <button>Add</button>
           <button>Remove</button>
         </form>
-        <button>Share</button>
+        {/* <button>Share</button> */}
       </div>
     );
   
