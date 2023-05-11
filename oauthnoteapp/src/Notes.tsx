@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {Fragment, useState} from 'react';
 import Note from './NoteSingle';
 
 function Notes() {
@@ -7,6 +7,10 @@ function Notes() {
   const [todos, setTodos] = useState([] as {id: number, name: string}[]); //todos is a list of todo objects
   const [todoName, setTodoName] = useState("");
   const [id, setId] = useState(0);
+  // null || number
+const [editId, setEditId] = useState(0);
+
+
 
   //* Returns a list of todos as an unordered list of items with the todo name as the text of the list item
   //* Everytime the input changes, the value of the input is set to the todoName varable
@@ -15,18 +19,17 @@ function Notes() {
       <div className="todoList">
         <ul>
           {todos.map((todo) => (
-            <Note id={todo.id} name={todo.name} removeTodo={removeTodo}  todo={{
-              id: undefined
-            }} editTodo={editTodo}/>
+            <Note id={todo.id} name={todo.name} removeTodo={removeTodo}  editTodo={editTodo} editId={editId}/>
           ))}
         </ul>
+      
         <form className='form' onSubmit={(e) => {addTodo(e)}}>
           <input className="input" type="text" placeholder="Add a todo" value={todoName} onChange={
             item => setTodoName(item.target.value)} 
-          />
-          <button>Add</button>
-          <button>Remove</button>
+            />
+          <button>Add</button> 
         </form>
+        
         {/* <button>Share</button> */}
       </div>
     );
@@ -61,9 +64,9 @@ function Notes() {
   }
 
   function editTodo(id:number) {
-    setTodos(todos.filter(todo => todo.id !== id));
-
+    setEditId(id);
   }
+
 }
 
 export default Notes;
